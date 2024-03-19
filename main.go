@@ -8,6 +8,7 @@ import (
 	"os"
 	"path"
 	"strings"
+	"time"
 
 	_ "github.com/microsoft/go-mssqldb"
 )
@@ -20,7 +21,7 @@ func main() {
 	db := os.Getenv("SQLSERVER_DB")
 	root := os.Getenv("SQLSERVER_BACKUP_ROOT")
 
-	bakName := strings.Join([]string{db, "bak"}, ".")
+	bakName := fmt.Sprintf("%s-%s.bak", db, time.Now().Format(time.RFC3339))
 	destPath := path.Join(root, bakName)
 
 	cmd := fmt.Sprintf(`
